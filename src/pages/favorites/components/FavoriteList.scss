@@ -1,0 +1,7 @@
+.favorites__list {
+  gap: 16px;
+
+  @include media.desktop {
+    justify-items: center;
+  }
+}

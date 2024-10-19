@@ -1,0 +1,28 @@
+.search {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 90px;
+
+  @include media.tablet {
+    row-gap: 40px;
+  }
+
+  &__title {
+    @include mixins.fluid-text(64, 32);
+
+    font-family: var(--font-family-second);
+    font-weight: 700;
+    text-transform: capitalize;
+    text-align: center;
+
+    & > span {
+      color: var(--color-orange);
+    }
+  }
+
+  &__form {
+    max-width: 762px;
+    width: 100%;
+  }
+}

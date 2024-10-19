@@ -1,0 +1,33 @@
+.header {
+  &__menu {
+    &-list {
+      display: flex;
+      align-items: center;
+      column-gap: 16px;
+    }
+
+    &-link {
+      display: flex;
+      align-items: center;
+      column-gap: 4px;
+
+      color: var(--color-light);
+
+      @include media.hover {
+        color: var(--color-accent);
+      }
+
+      & > svg {
+        color: var(--color-accent);
+      }
+
+      &.is-active {
+        color: var(--color-accent);
+      }
+
+      &.is-hidden {
+        display: none;
+      }
+    }
+  }
+}

@@ -1,0 +1,16 @@
+.title {
+  &__header {
+    font-size: 64px;
+    text-transform: capitalize;
+    font-weight: 700;
+    text-align: center;
+
+    & > p:first-child {
+      --paragraphMarginBottom: 0;
+    }
+
+    & > p:last-child {
+      color: var(--color-orange);
+    }
+  }
+}

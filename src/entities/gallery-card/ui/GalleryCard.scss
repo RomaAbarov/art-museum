@@ -1,0 +1,61 @@
+.gallery-card {
+  position: relative;
+  z-index: 1;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &__image {
+    object-fit: cover;
+  }
+
+  &__description {
+    --heightDescription: 132px;
+
+    position: relative;
+    z-index: 2;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    column-gap: 8px;
+
+    max-width: 334px;
+    width: 100%;
+    height: var(--heightDescription);
+    margin-top: calc(var(--heightDescription) / 2 * -1);
+    font-size: 15px;
+    padding: 32px 24px;
+    background: var(--color-light);
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__name {
+    @include mixins.trim-text;
+
+    max-width: 219px;
+    font-size: 17px;
+    font-weight: 500;
+    letter-spacing: -0.03em;
+  }
+
+  &__author {
+    @include mixins.trim-text;
+
+    max-width: 219px;
+    color: var(--color-accent);
+    line-height: 1.7;
+    letter-spacing: -0.01em;
+  }
+
+  &__access {
+    font-weight: 700;
+    line-height: 1.7;
+    letter-spacing: -0.01em;
+  }
+}

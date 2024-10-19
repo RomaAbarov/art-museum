@@ -1,0 +1,9 @@
+.other-works {
+  &__list {
+    gap: 16px;
+
+    @include media.desktop {
+      justify-items: center;
+    }
+  }
+}

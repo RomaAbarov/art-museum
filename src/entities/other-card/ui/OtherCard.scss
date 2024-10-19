@@ -1,0 +1,46 @@
+.other-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 416px;
+  padding: 16px;
+
+  &__info {
+    display: flex;
+    column-gap: 16px;
+  }
+
+  &__image {
+    object-fit: cover;
+  }
+
+  &__description {
+    display: flex;
+    flex-direction: column;
+
+    max-width: 219px;
+  }
+
+  &__name {
+    @include mixins.trim-text;
+
+    font-size: 17px;
+    font-weight: 500;
+    letter-spacing: -0.03em;
+  }
+
+  &__author {
+    @include mixins.trim-text;
+
+    color: var(--color-accent);
+    line-height: 1.7;
+    letter-spacing: -0.01em;
+  }
+
+  &__access {
+    font-weight: 700;
+    line-height: 1.7;
+    letter-spacing: -0.01em;
+  }
+}

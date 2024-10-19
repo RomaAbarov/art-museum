@@ -1,0 +1,10 @@
+.gallery {
+  &__pagination {
+    display: flex;
+    justify-content: end;
+
+    @include media.desktop {
+      justify-content: center;
+    }
+  }
+}

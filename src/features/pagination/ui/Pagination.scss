@@ -1,0 +1,22 @@
+.pagination {
+  &__list {
+    display: flex;
+  }
+
+  &__button {
+    @include mixins.reset-button;
+
+    width: 30px;
+    aspect-ratio: 1;
+    border-radius: var(--border-radius-small);
+    cursor: pointer;
+
+    @include media.hover {
+      background-color: var(--color-accent);
+    }
+
+    &.is-active {
+      background-color: var(--color-orange);
+    }
+  }
+}

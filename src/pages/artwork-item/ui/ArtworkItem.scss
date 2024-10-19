@@ -1,0 +1,73 @@
+.artwork-item {
+  display: flex;
+  column-gap: 80px;
+
+  @include media.tablet {
+    flex-direction: column;
+    align-items: center;
+    row-gap: 40px;
+  }
+
+  &__image {
+    height: auto;
+  }
+
+  &__inner {
+    position: relative;
+  }
+
+  &__wrapper {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+  }
+
+  &__body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    @include media.tablet {
+      row-gap: 40px;
+    }
+  }
+
+  &__name {
+    @include mixins.fluid-text(32, 24);
+
+    max-width: 640px;
+    margin-bottom: 32px;
+
+    @include media.tablet {
+      margin-bottom: 16px;
+    }
+  }
+
+  &__author {
+    font-size: 24px;
+    color: var(--color-accent);
+  }
+
+  &__description {
+    &-title {
+      @include mixins.fluid-text(32, 24);
+      margin-bottom: 32px;
+
+      @include media.tablet {
+        margin-bottom: 16px;
+      }
+    }
+    &-body {
+      display: flex;
+      flex-direction: column;
+      row-gap: 16px;
+
+      font-size: 16px;
+      color: var(--color-accent);
+
+      & span {
+        color: var(--color-dark);
+      }
+    }
+  }
+}

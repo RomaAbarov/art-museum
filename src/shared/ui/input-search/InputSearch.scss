@@ -1,0 +1,46 @@
+.search {
+  --widthButtonSearch: 64px;
+
+  &__field {
+    position: relative;
+  }
+
+  &__input {
+    width: 100%;
+    height: var(--input-height);
+    padding-inline: 16px var(--widthButtonSearch);
+    border: none;
+    border-radius: var(--border-radius);
+    background: rgba(57, 57, 57, 0.05);
+
+    &::-webkit-search-cancel-button {
+      -webkit-appearance: none;
+    }
+  }
+
+  &__button {
+    @include mixins.reset-button;
+
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    width: var(--widthButtonSearch);
+    aspect-ratio: 1;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+
+    @include media.hover {
+      background-color: var(--color-accent);
+    }
+  }
+
+  &__error {
+    position: absolute;
+    left: 0;
+    padding-left: 16px;
+
+    font-size: 14px;
+    color: red;
+  }
+}

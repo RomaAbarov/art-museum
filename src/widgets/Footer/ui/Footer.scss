@@ -1,0 +1,16 @@
+.footer {
+  padding-block: 30px;
+  background: var(--color-light);
+
+  &__inner {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+  }
+
+  &__logo {
+    @include media.mobile-s {
+      max-width: 150px;
+    }
+  }
+}

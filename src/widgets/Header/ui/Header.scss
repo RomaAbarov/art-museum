@@ -1,0 +1,16 @@
+.header {
+  padding-block: 30px;
+  background: var(--gradient);
+
+  &__inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__logo {
+    @include media.mobile-s {
+      max-width: 150px;
+    }
+  }
+}
