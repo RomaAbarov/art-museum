@@ -81,6 +81,7 @@ export function Home() {
                   page={page}
                   setPage={setPage}
                   isNextPage={total.totalElem > limit}
+                  disabled={Math.ceil(total.totalElem / limit) === page}
                 />
               </div>
             </div>

@@ -6,9 +6,16 @@ type Props = {
   page: number;
   setPage: (page: number) => void;
   isNextPage: boolean;
+  disabled: boolean;
 };
 
-export function Pagination({ totalPage, page, setPage, isNextPage }: Props) {
+export function Pagination({
+  totalPage,
+  page,
+  setPage,
+  isNextPage,
+  disabled,
+}: Props) {
   const arrayPages = createPagesArray(totalPage);
 
   return (
@@ -35,8 +42,10 @@ export function Pagination({ totalPage, page, setPage, isNextPage }: Props) {
             <button
               type="button"
               className="pagination__button"
+              disabled={disabled}
               onClick={() => setPage(page + 1)}
             >
+              <span className="visually-hidden">next page</span>
               <svg
                 width="10"
                 height="15"
