@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import useFetching from "@/shared/hooks/useFetching";
 import ApiSearch from "@/shared/api/apiSearch";
 import { TArtwork } from "@/shared/types";
+import SkeletonArtworkItem from "./SkeletonArtworkItem";
 import "./ArtworkItem.scss";
 
 export function ArtworkItem() {
@@ -34,7 +35,7 @@ export function ArtworkItem() {
         {errorArtwork ? (
           <h1>{errorArtwork}</h1>
         ) : isLoadingArtwork ? (
-          "Loading..."
+          <SkeletonArtworkItem />
         ) : (
           <div className="artwork-item">
             <div className="artwork-item__inner">

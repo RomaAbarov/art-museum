@@ -66,26 +66,25 @@ export function Home() {
           <h2 className="section__title">Our special gallery</h2>
         </header>
         <div className="section__body">
-          <div className="gallery">
-            {errorArtworks ? (
-              <h1 color="red">{errorArtworks}</h1>
-            ) : isLoadingArtworks ? (
-              <h1>Loading...</h1>
-            ) : (
+          {errorArtworks ? (
+            <h1>{errorArtworks}</h1>
+          ) : (
+            <div className="gallery">
               <GalleryList
                 limit={limitArtworks.limitGallery}
                 artworks={artworks}
+                isLoading={isLoadingArtworks}
               />
-            )}
-            <div className="gallery__pagination ">
-              <Pagination
-                totalPage={total.totalPage}
-                page={page}
-                setPage={setPage}
-                isNextPage={total.totalElem > limit}
-              />
+              <div className="gallery__pagination ">
+                <Pagination
+                  totalPage={total.totalPage}
+                  page={page}
+                  setPage={setPage}
+                  isNextPage={total.totalElem > limit}
+                />
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </section>
 
@@ -95,18 +94,17 @@ export function Home() {
           <h2 className="section__title">Other works for you</h2>
         </header>
         <div className="section__body">
-          <div className="other-works">
-            {errorArtworks ? (
-              <h1 color="red">{errorArtworks}</h1>
-            ) : isLoadingArtworks ? (
-              <h1>Loading...</h1>
-            ) : (
+          {errorArtworks ? (
+            <h1>{errorArtworks}</h1>
+          ) : (
+            <div className="other-works">
               <OthersWorksList
-                limit={limitArtworks.limitGallery}
+                limit={limitArtworks.limitOtherWorks}
                 artworks={artworks}
+                isLoading={isLoadingArtworks}
               />
-            )}
-          </div>
+            </div>
+          )}
         </div>
       </section>
     </main>
