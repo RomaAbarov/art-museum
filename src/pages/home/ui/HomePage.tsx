@@ -1,30 +1,41 @@
 import { Pagination } from "@/features/pagination";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import GalleryList from "../components/gallery-list/GalleryList";
 import { TGallery } from "@/shared/types";
 import OthersWorksList from "../components/others-works-list/OthersWorksList";
 import ApiSearch from "@/shared/api/apiSearch";
 import useFetching from "@/shared/hooks/useFetching";
 import { SectionSearch } from "../components/section-search/SectionSearch";
+import { useAppDispatch, useAppSelector } from "@/shared/hooks/reduxHooks";
+import {
+  selectCurrentPage,
+  selectSearchValue,
+  setPage,
+  setSearchValue,
+} from "../model/filterSlice";
+import { useSearchParams } from "react-router-dom";
 import "./HomePage.scss";
 
 export function Home() {
   const [artworks, setArtworks] = useState<TGallery[]>([]);
   const [total, setTotal] = useState({ totalElem: 0, totalPage: 4 });
-  const [page, setPage] = useState(1);
   const [limitArtworks, setLimitArtworks] = useState({
     limitGallery: 3,
     limitOtherWorks: 9,
   });
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const isSearch = useRef(false);
+  const isMounted = useRef(false);
+
+  const searchValue = useAppSelector(selectSearchValue);
+  const page = useAppSelector(selectCurrentPage);
+  const dispatch = useAppDispatch();
 
   const limit = limitArtworks.limitGallery + limitArtworks.limitOtherWorks;
 
   const [fetching, isLoadingArtworks, errorArtworks] = useFetching(
-    async (data) => {
+    async (value) => {
       const fields = "id,title,artist_title,image_id,thumbnail";
-
-      const value = data ? data : "";
 
       const response = await ApiSearch.getArtworks(value, limit, page, fields);
 
@@ -44,19 +55,38 @@ export function Home() {
   );
 
   useEffect(() => {
-    if (searchQuery) {
-      fetching(searchQuery);
-      return;
+    if (isMounted.current) {
+      setSearchParams({ q: searchValue, page: String(page) });
     }
 
-    fetching(null);
-  }, [page, searchQuery]);
+    isMounted.current = true;
+  }, [page, searchValue]);
+
+  useEffect(() => {
+    if (searchParams.size) {
+      const q = searchParams.get("q");
+      const p = searchParams.get("page");
+
+      dispatch(setSearchValue(q!));
+      dispatch(setPage(Number(p!)));
+
+      isSearch.current = true;
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!isSearch.current) {
+      fetching(searchValue);
+    }
+
+    isSearch.current = false;
+  }, [page, searchValue]);
 
   return (
     <main className="main">
       <section className="section container">
         <div className="section__body">
-          <SectionSearch setPage={setPage} setSearchQuery={setSearchQuery} />
+          <SectionSearch />
         </div>
       </section>
 
@@ -78,8 +108,6 @@ export function Home() {
               <div className="gallery__pagination ">
                 <Pagination
                   totalPage={total.totalPage}
-                  page={page}
-                  setPage={setPage}
                   isNextPage={total.totalElem > limit}
                   disabled={Math.ceil(total.totalElem / limit) === page}
                 />
