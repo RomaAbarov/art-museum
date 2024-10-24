@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import useFetching from "@/shared/hooks/useFetching";
 import ApiSearch from "@/shared/api/apiSearch";
-import { TArtwork } from "@/shared/types";
+import { TArtwork, TGallery } from "@/shared/types";
 import SkeletonArtworkItem from "./SkeletonArtworkItem";
 import "./ArtworkItem.scss";
 
@@ -11,7 +11,7 @@ export function ArtworkItem() {
   const { idArtwork } = useParams();
   const [artwork, setAtrwork] = useState<TArtwork | null>(null);
 
-  const [fetching, isLoadingArtwork, errorArtwork] = useFetching(async () => {
+  const [fetching, isLoadingArtwork, errorArtwork] = useFetching(async (_) => {
     const fields =
       "id,title,artist_display,image_id,dimensions,credit_line,thumbnail";
     let response;
@@ -26,7 +26,7 @@ export function ArtworkItem() {
   });
 
   useEffect(() => {
-    fetching(null);
+    fetching("");
   }, []);
 
   return (
@@ -49,7 +49,7 @@ export function ArtworkItem() {
               <div className="artwork-item__wrapper">
                 <ButtonFavorite
                   cls="button-favorite--accent-bg"
-                  artwork={artwork}
+                  artwork={artwork as TGallery | null}
                 />
               </div>
             </div>
