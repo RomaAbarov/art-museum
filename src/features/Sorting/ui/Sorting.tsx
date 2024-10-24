@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { SortByList } from "@/shared/consts";
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/reduxHooks";
-import { selectSortBy, setSortBy } from "../../model/filterSlice";
-import "./SectionSort.scss";
+import { selectSortBy, setSortBy } from "@/pages/home/model/filterSlice";
+import "./Sorting.scss";
 
-export default function SectionSort() {
+export function Sorting() {
   const [isShowPopup, setIsShowPopup] = useState(false);
   const [selected, setSelected] = useState(0);
   const sortRef = useRef<HTMLDivElement>(null);

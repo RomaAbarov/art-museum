@@ -5,7 +5,7 @@ import { TGallery } from "@/shared/types";
 import OthersWorksList from "../components/others-works-list/OthersWorksList";
 import ApiSearch from "@/shared/api/apiSearch";
 import useFetching from "@/shared/hooks/useFetching";
-import { SectionSearch } from "../components/section-search/SectionSearch";
+import { Search } from "@/features/Search";
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/reduxHooks";
 import {
   selectCurrentPage,
@@ -16,9 +16,9 @@ import {
   setSortBy,
 } from "../model/filterSlice";
 import { useSearchParams } from "react-router-dom";
-import SectionSort from "../components/section-sort/SectionSort";
 import { SortBy } from "@/shared/consts";
 import useSortedArtworks from "@/shared/hooks/useSortedArtworks";
+import { Sorting } from "@/features/Sorting";
 import "./HomePage.scss";
 
 export function Home() {
@@ -111,8 +111,8 @@ export function Home() {
     <main className="main">
       <section className="section container">
         <div className="section__body">
-          <SectionSearch />
-          <SectionSort />
+          <Search />
+          <Sorting />
         </div>
       </section>
 

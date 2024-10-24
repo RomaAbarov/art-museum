@@ -1,5 +1,5 @@
 import { useFormContext } from "react-hook-form";
-import { TSearch } from "../../model/schema";
+import { TSearch } from "@/pages/home/model/schema";
 import { InputSearch } from "@/shared/ui/input-search";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/reduxHooks";
@@ -7,10 +7,10 @@ import {
   selectSearchValue,
   setPage,
   setSearchValue,
-} from "../../model/filterSlice";
-import "./SectionSearch.scss";
+} from "@/pages/home/model/filterSlice";
+import "./Search.scss";
 
-export function SectionSearch() {
+export function Search() {
   const {
     register,
     formState: { errors },
