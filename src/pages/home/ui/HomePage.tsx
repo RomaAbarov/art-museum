@@ -132,11 +132,13 @@ export function Home() {
                 isLoading={isLoadingArtworks}
               />
               <div className="gallery__pagination ">
-                <Pagination
-                  totalPage={total.totalPage}
-                  isNextPage={total.totalElem > limit}
-                  disabled={Math.ceil(total.totalElem / limit) === page}
-                />
+                {!!total.totalElem && (
+                  <Pagination
+                    totalPage={total.totalPage}
+                    isNextPage={total.totalElem > limit}
+                    disabled={Math.ceil(total.totalElem / limit) === page}
+                  />
+                )}
               </div>
             </div>
           )}
