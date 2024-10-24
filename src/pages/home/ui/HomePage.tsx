@@ -10,10 +10,15 @@ import { useAppDispatch, useAppSelector } from "@/shared/hooks/reduxHooks";
 import {
   selectCurrentPage,
   selectSearchValue,
+  selectSortBy,
   setPage,
   setSearchValue,
+  setSortBy,
 } from "../model/filterSlice";
 import { useSearchParams } from "react-router-dom";
+import SectionSort from "../components/section-sort/SectionSort";
+import { SortBy } from "@/shared/consts";
+import useSortedArtworks from "@/shared/hooks/useSortedArtworks";
 import "./HomePage.scss";
 
 export function Home() {
@@ -29,13 +34,15 @@ export function Home() {
 
   const searchValue = useAppSelector(selectSearchValue);
   const page = useAppSelector(selectCurrentPage);
+  const sortBy = useAppSelector(selectSortBy);
+
   const dispatch = useAppDispatch();
 
   const limit = limitArtworks.limitGallery + limitArtworks.limitOtherWorks;
 
   const [fetching, isLoadingArtworks, errorArtworks] = useFetching(
     async (value) => {
-      const fields = "id,title,artist_title,image_id,thumbnail";
+      const fields = "_score,id,title,artist_title,image_id,thumbnail,date_end";
 
       const response = await ApiSearch.getArtworks(value, limit, page, fields);
 
@@ -56,19 +63,35 @@ export function Home() {
 
   useEffect(() => {
     if (isMounted.current) {
-      setSearchParams({ q: searchValue, page: String(page) });
+      let sort = "";
+
+      switch (sortBy) {
+        case SortBy.Ascending:
+          sort = "asc";
+          break;
+        case SortBy.Descending:
+          sort = "desc";
+          break;
+        case SortBy.Alphabet:
+          sort = SortBy.Alphabet;
+          break;
+      }
+
+      setSearchParams({ q: searchValue, page: String(page), sort });
     }
 
     isMounted.current = true;
-  }, [page, searchValue]);
+  }, [page, searchValue, sortBy]);
 
   useEffect(() => {
     if (searchParams.size) {
       const q = searchParams.get("q");
       const p = searchParams.get("page");
+      const s = searchParams.get("sort");
 
       dispatch(setSearchValue(q!));
       dispatch(setPage(Number(p!)));
+      dispatch(setSortBy(s!));
 
       isSearch.current = true;
     }
@@ -82,11 +105,14 @@ export function Home() {
     isSearch.current = false;
   }, [page, searchValue]);
 
+  const sortedArtworks = useSortedArtworks(artworks, sortBy);
+
   return (
     <main className="main">
       <section className="section container">
         <div className="section__body">
           <SectionSearch />
+          <SectionSort />
         </div>
       </section>
 
@@ -102,7 +128,7 @@ export function Home() {
             <div className="gallery">
               <GalleryList
                 limit={limitArtworks.limitGallery}
-                artworks={artworks}
+                artworks={sortedArtworks}
                 isLoading={isLoadingArtworks}
               />
               <div className="gallery__pagination ">
@@ -129,7 +155,7 @@ export function Home() {
             <div className="other-works">
               <OthersWorksList
                 limit={limitArtworks.limitOtherWorks}
-                artworks={artworks}
+                artworks={sortedArtworks}
                 isLoading={isLoadingArtworks}
               />
             </div>
