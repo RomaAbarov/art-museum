@@ -6,7 +6,7 @@ export function Header() {
   return (
     <header className="header">
       <div className="header__inner container">
-        <Link to="/" className="header__logo logo">
+        <Link to="/" reloadDocument className="header__logo logo">
           <img
             className="logo__image"
             src="/icons/museum-logo-1.svg"
