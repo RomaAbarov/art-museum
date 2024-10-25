@@ -1,7 +1,7 @@
 import { OtherCard } from "@/entities/other-card";
 import { TGallery } from "@/shared/types";
-import "./OthersWorksList.scss";
 import SkeletonOtherCard from "@/entities/other-card/ui/SkeletonOtherCard";
+import "./OthersWorksList.scss";
 
 type Props = {
   limit: number;
@@ -9,7 +9,7 @@ type Props = {
   isLoading: boolean;
 };
 
-export default function OthersWorksList({ limit, artworks, isLoading }: Props) {
+export function OthersWorksList({ limit, artworks, isLoading }: Props) {
   return (
     <ul className="other-works__list grid grid--3">
       {isLoading

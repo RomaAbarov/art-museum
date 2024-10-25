@@ -9,7 +9,7 @@ type Props = {
   isLoading: boolean;
 };
 
-export default function GalleryList({ limit, artworks, isLoading }: Props) {
+export function GalleryList({ limit, artworks, isLoading }: Props) {
   return (
     <ul className="gallery__list grid grid--3">
       {isLoading

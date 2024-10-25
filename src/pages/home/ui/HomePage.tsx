@@ -1,11 +1,10 @@
-import { Pagination } from "@/features/pagination";
 import { useEffect, useRef, useState } from "react";
-import GalleryList from "../components/gallery-list/GalleryList";
+import { GalleryList, OthersWorksList } from "../components";
 import { TGallery } from "@/shared/types";
-import OthersWorksList from "../components/others-works-list/OthersWorksList";
 import ApiSearch from "@/shared/api/apiSearch";
 import useFetching from "@/shared/hooks/useFetching";
 import { Search } from "@/features/Search";
+import { Pagination } from "@/features/pagination";
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/reduxHooks";
 import {
   selectCurrentPage,
