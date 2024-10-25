@@ -24,7 +24,7 @@ import "./HomePage.scss";
 export function Home() {
   const [artworks, setArtworks] = useState<TGallery[]>([]);
   const [total, setTotal] = useState({ totalElem: 0, totalPage: 4 });
-  const [limitArtworks, setLimitArtworks] = useState({
+  const [limitArtworks] = useState({
     limitGallery: 3,
     limitOtherWorks: 9,
   });

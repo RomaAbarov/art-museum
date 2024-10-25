@@ -7,7 +7,7 @@ export function Footer() {
         <a href="#" className="footer__logo logo">
           <img
             className="logo__image"
-            src="/public/icons/museum-logo-2.svg"
+            src="/icons/museum-logo-2.svg"
             alt="Museum of art"
             width="206"
             height="63"
