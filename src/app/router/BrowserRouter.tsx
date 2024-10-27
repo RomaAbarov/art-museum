@@ -1,9 +1,8 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { lazy, Suspense } from "react";
+import { lazy } from "react";
 import { Layout } from "../layouts";
 import { Home } from "@/pages/home";
 import { ErrorPage } from "@/pages/error";
-import { Fallback } from "@/shared/ui/fallback";
 
 const ArtworkItem = lazy(() => import("@/pages/artwork-item"));
 const Favorites = lazy(() => import("@/pages/favorites"));
@@ -19,19 +18,11 @@ const routes = [
       },
       {
         path: "/artwork/:idArtwork",
-        element: (
-          <Suspense fallback={<Fallback />}>
-            <ArtworkItem />
-          </Suspense>
-        ),
+        element: <ArtworkItem />,
       },
       {
         path: "/favorites",
-        element: (
-          <Suspense fallback={<Fallback />}>
-            <Favorites />
-          </Suspense>
-        ),
+        element: <Favorites />,
       },
     ],
     errorElement: <ErrorPage />,
