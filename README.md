@@ -1,5 +1,15 @@
 # React + TypeScript + Vite
 
+Сайт для просмотра галереи и поиска artworks, просмотра выбранного artwork и добавление его в избранное.
+
+Технологии в проекте:
+
+Главная страница: useEffect, получение данных (axios) и хранение в компоненте (useState), значения поиска, текущей страницы и сортирвки хранятся в store (Redux toolkit). Валидация поиска (react-hook-form + zod). Добавление artwork в избранное(Redux toolkit).
+
+Страница artwork: useEffect, получение данных (axios) и хранение в компоненте (useState).
+
+Страница избранного: хранение избранных artwork в store и localStorage(Redux toolkit, redux-persist).
+
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 Currently, two official plugins are available:
@@ -18,11 +28,11 @@ export default tseslint.config({
   languageOptions: {
     // other options...
     parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
+      project: ["./tsconfig.node.json", "./tsconfig.app.json"],
       tsconfigRootDir: import.meta.dirname,
     },
   },
-})
+});
 ```
 
 - Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
@@ -31,11 +41,11 @@ export default tseslint.config({
 
 ```js
 // eslint.config.js
-import react from 'eslint-plugin-react'
+import react from "eslint-plugin-react";
 
 export default tseslint.config({
   // Set the react version
-  settings: { react: { version: '18.3' } },
+  settings: { react: { version: "18.3" } },
   plugins: {
     // Add the react plugin
     react,
@@ -44,7 +54,7 @@ export default tseslint.config({
     // other rules...
     // Enable its recommended rules
     ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
+    ...react.configs["jsx-runtime"].rules,
   },
-})
+});
 ```

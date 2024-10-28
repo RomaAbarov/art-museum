@@ -1,30 +1,47 @@
-import { Pagination } from "@/features/pagination";
-import { useEffect, useState } from "react";
-import GalleryList from "../components/gallery-list/GalleryList";
+import { useEffect, useRef, useState } from "react";
+import { GalleryList, OthersWorksList } from "../components";
 import { TGallery } from "@/shared/types";
-import OthersWorksList from "../components/others-works-list/OthersWorksList";
 import ApiSearch from "@/shared/api/apiSearch";
 import useFetching from "@/shared/hooks/useFetching";
-import { SectionSearch } from "../components/section-search/SectionSearch";
+import { Search } from "@/features/Search";
+import { Pagination } from "@/features/pagination";
+import { useAppDispatch, useAppSelector } from "@/shared/hooks/reduxHooks";
+import {
+  selectCurrentPage,
+  selectSearchValue,
+  selectSortBy,
+  setPage,
+  setSearchValue,
+  setSortBy,
+} from "../model/filterSlice";
+import { useSearchParams } from "react-router-dom";
+import { SortBy } from "@/shared/consts";
+import useSortedArtworks from "@/shared/hooks/useSortedArtworks";
+import { Sorting } from "@/features/Sorting";
 import "./HomePage.scss";
 
 export function Home() {
   const [artworks, setArtworks] = useState<TGallery[]>([]);
   const [total, setTotal] = useState({ totalElem: 0, totalPage: 4 });
-  const [page, setPage] = useState(1);
-  const [limitArtworks, setLimitArtworks] = useState({
+  const [limitArtworks] = useState({
     limitGallery: 3,
     limitOtherWorks: 9,
   });
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const isSearch = useRef(false);
+  const isMounted = useRef(false);
+
+  const searchValue = useAppSelector(selectSearchValue);
+  const page = useAppSelector(selectCurrentPage);
+  const sortBy = useAppSelector(selectSortBy);
+
+  const dispatch = useAppDispatch();
 
   const limit = limitArtworks.limitGallery + limitArtworks.limitOtherWorks;
 
   const [fetching, isLoadingArtworks, errorArtworks] = useFetching(
-    async (data) => {
-      const fields = "id,title,artist_title,image_id,thumbnail";
-
-      const value = data ? data : "";
+    async (value) => {
+      const fields = "_score,id,title,artist_title,image_id,thumbnail,date_end";
 
       const response = await ApiSearch.getArtworks(value, limit, page, fields);
 
@@ -44,19 +61,57 @@ export function Home() {
   );
 
   useEffect(() => {
-    if (searchQuery) {
-      fetching(searchQuery);
-      return;
+    if (isMounted.current) {
+      let sort = "";
+
+      switch (sortBy) {
+        case SortBy.Ascending:
+          sort = "asc";
+          break;
+        case SortBy.Descending:
+          sort = "desc";
+          break;
+        case SortBy.Alphabet:
+          sort = SortBy.Alphabet;
+          break;
+      }
+
+      setSearchParams({ q: searchValue, page: String(page), sort });
     }
 
-    fetching(null);
-  }, [page, searchQuery]);
+    isMounted.current = true;
+  }, [page, searchValue, sortBy]);
+
+  useEffect(() => {
+    if (searchParams.size) {
+      const q = searchParams.get("q");
+      const p = searchParams.get("page");
+      const s = searchParams.get("sort");
+
+      dispatch(setSearchValue(q!));
+      dispatch(setPage(Number(p!)));
+      dispatch(setSortBy(s!));
+
+      isSearch.current = true;
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!isSearch.current) {
+      fetching(searchValue);
+    }
+
+    isSearch.current = false;
+  }, [page, searchValue]);
+
+  const sortedArtworks = useSortedArtworks(artworks, sortBy);
 
   return (
     <main className="main">
       <section className="section container">
         <div className="section__body">
-          <SectionSearch setPage={setPage} setSearchQuery={setSearchQuery} />
+          <Search />
+          <Sorting />
         </div>
       </section>
 
@@ -66,26 +121,26 @@ export function Home() {
           <h2 className="section__title">Our special gallery</h2>
         </header>
         <div className="section__body">
-          <div className="gallery">
-            {errorArtworks ? (
-              <h1 color="red">{errorArtworks}</h1>
-            ) : isLoadingArtworks ? (
-              <h1>Loading...</h1>
-            ) : (
+          {errorArtworks ? (
+            <h1>{errorArtworks}</h1>
+          ) : (
+            <div className="gallery">
               <GalleryList
                 limit={limitArtworks.limitGallery}
-                artworks={artworks}
+                artworks={sortedArtworks}
+                isLoading={isLoadingArtworks}
               />
-            )}
-            <div className="gallery__pagination ">
-              <Pagination
-                totalPage={total.totalPage}
-                page={page}
-                setPage={setPage}
-                isNextPage={total.totalElem > limit}
-              />
+              <div className="gallery__pagination ">
+                {!!total.totalElem && (
+                  <Pagination
+                    totalPage={total.totalPage}
+                    isNextPage={total.totalElem > limit}
+                    disabled={Math.ceil(total.totalElem / limit) === page}
+                  />
+                )}
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </section>
 
@@ -95,18 +150,17 @@ export function Home() {
           <h2 className="section__title">Other works for you</h2>
         </header>
         <div className="section__body">
-          <div className="other-works">
-            {errorArtworks ? (
-              <h1 color="red">{errorArtworks}</h1>
-            ) : isLoadingArtworks ? (
-              <h1>Loading...</h1>
-            ) : (
+          {errorArtworks ? (
+            <h1>{errorArtworks}</h1>
+          ) : (
+            <div className="other-works">
               <OthersWorksList
-                limit={limitArtworks.limitGallery}
-                artworks={artworks}
+                limit={limitArtworks.limitOtherWorks}
+                artworks={sortedArtworks}
+                isLoading={isLoadingArtworks}
               />
-            )}
-          </div>
+            </div>
+          )}
         </div>
       </section>
     </main>

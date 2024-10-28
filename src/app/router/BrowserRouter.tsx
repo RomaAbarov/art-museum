@@ -1,9 +1,11 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { lazy } from "react";
 import { Layout } from "../layouts";
 import { Home } from "@/pages/home";
-import { ArtworkItem } from "@/pages/artwork-item";
-import { Favorites } from "@/pages/favorites";
 import { ErrorPage } from "@/pages/error";
+
+const ArtworkItem = lazy(() => import("@/pages/artwork-item"));
+const Favorites = lazy(() => import("@/pages/favorites"));
 
 const routes = [
   {

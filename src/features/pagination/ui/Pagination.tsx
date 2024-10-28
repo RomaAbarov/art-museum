@@ -1,15 +1,19 @@
+import { useAppDispatch, useAppSelector } from "@/shared/hooks/reduxHooks";
 import createPagesArray from "../model/createPagesArray";
+import { selectCurrentPage, setPage } from "@/pages/home/model/filterSlice";
 import "./Pagination.scss";
 
 type Props = {
   totalPage: number;
-  page: number;
-  setPage: (page: number) => void;
   isNextPage: boolean;
+  disabled: boolean;
 };
 
-export function Pagination({ totalPage, page, setPage, isNextPage }: Props) {
+export function Pagination({ totalPage, isNextPage, disabled }: Props) {
   const arrayPages = createPagesArray(totalPage);
+
+  const page = useAppSelector(selectCurrentPage);
+  const dispatch = useAppDispatch();
 
   return (
     <div className="pagination">
@@ -23,7 +27,7 @@ export function Pagination({ totalPage, page, setPage, isNextPage }: Props) {
                   ? "pagination__button is-active"
                   : "pagination__button"
               }
-              onClick={() => setPage(numberPage)}
+              onClick={() => dispatch(setPage(numberPage))}
             >
               {numberPage}
             </button>
@@ -35,8 +39,10 @@ export function Pagination({ totalPage, page, setPage, isNextPage }: Props) {
             <button
               type="button"
               className="pagination__button"
-              onClick={() => setPage(page + 1)}
+              disabled={disabled}
+              onClick={() => dispatch(setPage(page + 1))}
             >
+              <span className="visually-hidden">next page</span>
               <svg
                 width="10"
                 height="15"

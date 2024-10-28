@@ -1,1 +1,1 @@
-export { ArtworkItem } from "./ui/ArtworkItem";
+export { ArtworkItem as default } from "./ui/ArtworkItem";

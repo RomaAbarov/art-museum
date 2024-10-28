@@ -1,12 +1,12 @@
 import { useState } from "react";
 
 export default function useFetching(
-  callback: (data: string | null) => Promise<void>
-): [(data: string | null) => Promise<void>, boolean, string] {
+  callback: (data: string) => Promise<void>
+): [(data: string) => Promise<void>, boolean, string] {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
-  async function fetching(data: string | null) {
+  async function fetching(data: string) {
     try {
       setIsLoading(true);
       await callback(data);

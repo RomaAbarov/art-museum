@@ -8,6 +8,10 @@
     row-gap: 40px;
   }
 
+  &:not(:last-child) {
+    margin-bottom: 50px;
+  }
+
   &__title {
     @include mixins.fluid-text(64, 32);
 

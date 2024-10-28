@@ -25,24 +25,28 @@ export default class ApiSearch {
 
         const result: TGallery[] = res.data.data.map(
           (r: {
+            _score: number;
             id: number;
             title: string;
             artist_title: string | null;
             image_id: string | null;
             thumbnail: { alt_text: string } | null;
             iiif_url: string;
+            date_end: number;
           }) => {
             // if (r.image_id === null) {
             //   return undefined;
             // }
 
             return {
+              score: r._score,
               id: r.id,
               title: r.title,
               artist_title: r.artist_title,
               image_id: r.image_id,
               alt_text: r.thumbnail?.alt_text,
               iiif_url: iiif_url,
+              date_end: r.date_end,
             };
           }
         );

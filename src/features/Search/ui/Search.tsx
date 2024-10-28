@@ -1,30 +1,35 @@
 import { useFormContext } from "react-hook-form";
-import { defaultValues, TSearch } from "../../model/schema";
+import { TSearch } from "@/pages/home/model/schema";
 import { InputSearch } from "@/shared/ui/input-search";
 import { useEffect } from "react";
-import "./SectionSearch.scss";
+import { useAppDispatch, useAppSelector } from "@/shared/hooks/reduxHooks";
+import {
+  selectSearchValue,
+  setPage,
+  setSearchValue,
+} from "@/pages/home/model/filterSlice";
+import "./Search.scss";
 
-type Props = {
-  setPage: (n: number) => void;
-  setSearchQuery: (str: string) => void;
-};
-
-export function SectionSearch({ setPage, setSearchQuery }: Props) {
+export function Search() {
   const {
     register,
     formState: { errors },
     handleSubmit,
+    setValue,
     reset,
     watch,
   } = useFormContext<TSearch>();
 
+  const dispatch = useAppDispatch();
+  const searchValue = useAppSelector(selectSearchValue);
+
   useEffect(() => {
-    reset(defaultValues);
-  }, []);
+    setValue("search", searchValue);
+  }, [searchValue]);
 
   function onSubmit(data: TSearch) {
-    setPage(1);
-    setSearchQuery(data.search);
+    dispatch(setPage(1));
+    dispatch(setSearchValue(data.search));
   }
 
   return (

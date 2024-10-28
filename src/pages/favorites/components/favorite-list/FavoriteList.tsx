@@ -1,9 +1,9 @@
 import { OtherCard } from "@/entities/other-card";
 import { useAppSelector } from "@/shared/hooks/reduxHooks";
-import { selectAllFavorites } from "../model/favoritesSlice";
+import { selectAllFavorites } from "../../model/favoritesSlice";
 import "./FavoriteList.scss";
 
-export default function FavoriteList() {
+export function FavoriteList() {
   const favorites = useAppSelector(selectAllFavorites);
 
   return (

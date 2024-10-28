@@ -1,4 +1,4 @@
-import FavoriteList from "../components/FavoriteList";
+import { FavoriteList } from "../components";
 import "./Favorites.scss";
 
 export function Favorites() {
