@@ -8,7 +8,7 @@ import { TGallery } from "@/shared/types";
 import "./ButtonFavorite.scss";
 
 type Props = {
-  artwork: TGallery | null;
+  artwork: TGallery | undefined;
   cls?: string;
 };
 
