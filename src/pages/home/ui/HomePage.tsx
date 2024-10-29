@@ -1,21 +1,16 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { GalleryList, OthersWorksList } from "../components";
 import { TGallery } from "@/shared/types";
 import ApiSearch from "@/shared/api/apiSearch";
 import useFetching from "@/shared/hooks/useFetching";
 import { Search } from "@/features/Search";
 import { Pagination } from "@/features/pagination";
-import { useAppDispatch, useAppSelector } from "@/shared/hooks/reduxHooks";
+import { useAppSelector } from "@/shared/hooks/reduxHooks";
 import {
   selectCurrentPage,
   selectSearchValue,
   selectSortBy,
-  setPage,
-  setSearchValue,
-  setSortBy,
 } from "../model/filterSlice";
-import { useSearchParams } from "react-router-dom";
-import { SortBy } from "@/shared/consts";
 import useSortedArtworks from "@/shared/hooks/useSortedArtworks";
 import { Sorting } from "@/features/Sorting";
 import "./HomePage.scss";
@@ -27,15 +22,15 @@ export function Home() {
     limitGallery: 3,
     limitOtherWorks: 9,
   });
-  const [searchParams, setSearchParams] = useSearchParams();
-  const isSearch = useRef(false);
-  const isMounted = useRef(false);
+  // const [searchParams, setSearchParams] = useSearchParams();
+  // const isSearch = useRef(false);
+  // const isMounted = useRef(false);
 
   const searchValue = useAppSelector(selectSearchValue);
   const page = useAppSelector(selectCurrentPage);
   const sortBy = useAppSelector(selectSortBy);
 
-  const dispatch = useAppDispatch();
+  //const dispatch = useAppDispatch();
 
   const limit = limitArtworks.limitGallery + limitArtworks.limitOtherWorks;
 
@@ -60,48 +55,50 @@ export function Home() {
     }
   );
 
+  // useEffect(() => {
+  //   if (isMounted.current) {
+  //     let sort = "";
+
+  //     switch (sortBy) {
+  //       case SortBy.Ascending:
+  //         sort = "asc";
+  //         break;
+  //       case SortBy.Descending:
+  //         sort = "desc";
+  //         break;
+  //       case SortBy.Alphabet:
+  //         sort = SortBy.Alphabet;
+  //         break;
+  //     }
+
+  //     setSearchParams({ q: searchValue, page: String(page), sort });
+  //   }
+
+  //   isMounted.current = true;
+  // }, [page, searchValue, sortBy]);
+
+  // useEffect(() => {
+  //   if (searchParams.size) {
+  //     const q = searchParams.get("q");
+  //     const p = searchParams.get("page");
+  //     const s = searchParams.get("sort");
+
+  //     dispatch(setSearchValue(q!));
+  //     dispatch(setPage(Number(p!)));
+  //     dispatch(setSortBy(s!));
+
+  //     isSearch.current = true;
+  //   }
+  // }, []);
+
   useEffect(() => {
-    if (isMounted.current) {
-      let sort = "";
+    // if (!isSearch.current) {
+    //   fetching(searchValue);
+    // }
 
-      switch (sortBy) {
-        case SortBy.Ascending:
-          sort = "asc";
-          break;
-        case SortBy.Descending:
-          sort = "desc";
-          break;
-        case SortBy.Alphabet:
-          sort = SortBy.Alphabet;
-          break;
-      }
+    //isSearch.current = false;
 
-      setSearchParams({ q: searchValue, page: String(page), sort });
-    }
-
-    isMounted.current = true;
-  }, [page, searchValue, sortBy]);
-
-  useEffect(() => {
-    if (searchParams.size) {
-      const q = searchParams.get("q");
-      const p = searchParams.get("page");
-      const s = searchParams.get("sort");
-
-      dispatch(setSearchValue(q!));
-      dispatch(setPage(Number(p!)));
-      dispatch(setSortBy(s!));
-
-      isSearch.current = true;
-    }
-  }, []);
-
-  useEffect(() => {
-    if (!isSearch.current) {
-      fetching(searchValue);
-    }
-
-    isSearch.current = false;
+    fetching(searchValue);
   }, [page, searchValue]);
 
   const sortedArtworks = useSortedArtworks(artworks, sortBy);
