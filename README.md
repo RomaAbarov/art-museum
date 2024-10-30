@@ -6,7 +6,7 @@
 
 Главная страница: useEffect, получение данных (axios) и хранение в компоненте (useState), значения поиска, текущей страницы и сортирвки хранятся в store (Redux toolkit). Валидация поиска (react-hook-form + zod). Добавление artwork в избранное(Redux toolkit).
 
-Страница artwork: useEffect, получение данных (axios) и хранение в компоненте (useState).
+Страница artwork: получение данных (rtk-query).
 
 Страница избранного: хранение избранных artwork в store и localStorage(Redux toolkit, redux-persist).
 
