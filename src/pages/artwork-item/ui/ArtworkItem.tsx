@@ -1,39 +1,39 @@
 import { ButtonFavorite } from "@/shared/ui/button-favorite";
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-import useFetching from "@/shared/hooks/useFetching";
-import ApiSearch from "@/shared/api/apiSearch";
-import { TArtwork, TGallery } from "@/shared/types";
+import { TGallery } from "@/shared/types";
 import SkeletonArtworkItem from "./SkeletonArtworkItem";
+import { useGetArtworkByIdQuery } from "@/shared/api/apiArtworks";
 import "./ArtworkItem.scss";
 
 export function ArtworkItem() {
   const { idArtwork } = useParams();
-  const [artwork, setAtrwork] = useState<TArtwork | null>(null);
 
-  const [fetching, isLoadingArtwork, errorArtwork] = useFetching(async (_) => {
-    const fields =
-      "id,title,artist_display,image_id,dimensions,credit_line,thumbnail";
-    let response;
+  if (!idArtwork) {
+    return (
+      <main className="main">
+        <section className="section container">Id Artwork not found!</section>
+      </main>
+    );
+  }
 
-    if (idArtwork) {
-      response = await ApiSearch.getArtwork(idArtwork, fields);
-    } else {
-      throw Error("Artwork ID not found");
-    }
-
-    setAtrwork(response);
-  });
-
-  useEffect(() => {
-    fetching("");
-  }, []);
+  const {
+    data: artwork,
+    error: errorArtwork,
+    isLoading: isLoadingArtwork,
+  } = useGetArtworkByIdQuery(
+    {
+      id: idArtwork!,
+      fields:
+        "id,title,artist_display,image_id,dimensions,credit_line,thumbnail",
+    },
+    { skip: !idArtwork }
+  );
 
   return (
     <main className="main">
       <section className="section container">
         {errorArtwork ? (
-          <h1>{errorArtwork}</h1>
+          <h1>Error</h1>
         ) : isLoadingArtwork ? (
           <SkeletonArtworkItem />
         ) : (
@@ -49,7 +49,7 @@ export function ArtworkItem() {
               <div className="artwork-item__wrapper">
                 <ButtonFavorite
                   cls="button-favorite--accent-bg"
-                  artwork={artwork as TGallery | null}
+                  artwork={artwork as TGallery | undefined}
                 />
               </div>
             </div>

@@ -13,16 +13,18 @@ import {
   REGISTER,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+import { apiArtworks } from "@/shared/api/apiArtworks";
 
 const persistConfig = {
   key: "root",
   storage,
-  blacklist: ["filter"],
+  blacklist: ["filter", apiArtworks.reducerPath],
 };
 
 const rootReducer = combineReducers({
   favorites: favoritesReducer,
   filter: filterReducer,
+  [apiArtworks.reducerPath]: apiArtworks.reducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -34,7 +36,7 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }),
+    }).concat(apiArtworks.middleware),
 });
 
 export const persistor = persistStore(store);
