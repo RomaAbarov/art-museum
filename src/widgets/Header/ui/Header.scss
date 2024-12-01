@@ -7,10 +7,11 @@
     justify-content: space-between;
     align-items: center;
   }
+}
 
-  &__logo {
-    @include media.mobile-s {
-      max-width: 150px;
-    }
+.logo {
+  &__image {
+    width: 20.6rem;
+    height: 6.3rem;
   }
 }

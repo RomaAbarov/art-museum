@@ -7,10 +7,4 @@
     justify-content: start;
     align-items: center;
   }
-
-  &__logo {
-    @include media.mobile-s {
-      max-width: 150px;
-    }
-  }
 }
