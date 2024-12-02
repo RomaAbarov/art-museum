@@ -2,16 +2,24 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  column-gap: 16px;
 
   width: 416px;
   padding: 16px;
 
+  @include media.mobile-s {
+    width: 390px;
+  }
+
   &__info {
     display: flex;
+    align-items: center;
     column-gap: 16px;
   }
 
   &__image {
+    width: 8rem;
+    height: 8rem;
     object-fit: cover;
   }
 
@@ -20,12 +28,18 @@
     flex-direction: column;
 
     max-width: 219px;
+
+    font-size: 1.5rem;
+
+    @include media.mobile-s {
+      max-width: 189px;
+    }
   }
 
   &__name {
     @include mixins.trim-text;
 
-    font-size: 17px;
+    font-size: 1.7rem;
     font-weight: 500;
     letter-spacing: -0.03em;
   }

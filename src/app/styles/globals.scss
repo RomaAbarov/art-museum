@@ -1,12 +1,17 @@
-body {
-  //@include fluid-text(15,32);
-  font-size: 15px;
+html {
+  font-size: 62.5%;
+}
 
+body {
   font-family: var(--font-family-base);
   font-weight: 400;
   line-height: 1.5; /*для chrome по умолчанию*/
   color: var(--color-dark);
   background-color: var(--color-light);
+
+  &:has(.burger-button.active) {
+    overflow: hidden;
+  }
 }
 
 a,

@@ -11,7 +11,7 @@
   }
 
   &__description {
-    --heightDescription: 132px;
+    --heightDescription: 13.2rem;
 
     position: relative;
     z-index: 2;
@@ -21,25 +21,27 @@
     align-items: center;
     column-gap: 8px;
 
+    font-size: 1.5rem;
+
     max-width: 334px;
     width: 100%;
     height: var(--heightDescription);
     margin-top: calc(var(--heightDescription) / 2 * -1);
-    font-size: 15px;
-    padding: 32px 24px;
+    padding: 3.2rem 2.4rem;
     background: var(--color-light);
   }
 
   &__info {
     display: flex;
     flex-direction: column;
+
+    min-width: 190px;
   }
 
   &__name {
     @include mixins.trim-text;
 
-    max-width: 219px;
-    font-size: 17px;
+    font-size: 1.7rem;
     font-weight: 500;
     letter-spacing: -0.03em;
   }
@@ -47,7 +49,6 @@
   &__author {
     @include mixins.trim-text;
 
-    max-width: 219px;
     color: var(--color-accent);
     line-height: 1.7;
     letter-spacing: -0.01em;

@@ -1,0 +1,126 @@
+.burger {
+  &-button {
+    @include mixins.reset-button;
+
+    position: relative;
+    z-index: 10;
+
+    width: 48px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+
+    @include media.hover {
+      background-color: var(--color-accent);
+    }
+
+    &__line {
+      @include mixins.abs-center;
+      content: "";
+
+      width: 50%;
+      height: 2px;
+      border-radius: var(--border-radius-small);
+      background-color: var(--color-light);
+
+      transition-duration: var(--transition-duration);
+
+      &::before,
+      &::after {
+        @include mixins.abs-center;
+        content: "";
+
+        width: 100%;
+        height: 100%;
+        border-radius: var(--border-radius-small);
+        background-color: var(--color-light);
+
+        transition-duration: var(--transition-duration);
+      }
+
+      &::before {
+        top: -8px;
+      }
+
+      &::after {
+        top: 10px;
+      }
+    }
+
+    &.active {
+      & > .burger-button__line {
+        background-color: transparent;
+
+        &::before {
+          top: 0;
+          rotate: (45deg);
+        }
+
+        &::after {
+          top: 0;
+          rotate: (-45deg);
+        }
+      }
+
+      & ~ .burger-menu__body {
+        visibility: visible;
+        opacity: 1;
+        transition: opacity var(--transition-duration);
+      }
+    }
+  }
+
+  &-menu {
+    &__body {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 9;
+
+      visibility: hidden;
+      width: 100%;
+      height: 100%;
+      padding: 30px 15px;
+      margin: 0;
+      border: none;
+      background-color: var(--color-dark);
+
+      opacity: 0;
+      transition: opacity var(--transition-duration);
+    }
+
+    &__list {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      row-gap: 3rem;
+      padding-top: 6.3rem;
+
+      font-size: 1.8rem;
+    }
+
+    &__link {
+      display: flex;
+      align-items: center;
+      column-gap: 0.4rem;
+
+      color: var(--color-light);
+
+      @include media.hover {
+        color: var(--color-accent);
+      }
+
+      & > svg {
+        color: var(--color-accent);
+      }
+
+      &.is-active {
+        color: var(--color-accent);
+      }
+
+      &.is-hidden {
+        display: none;
+      }
+    }
+  }
+}

@@ -6,7 +6,9 @@
   &__button {
     @include mixins.reset-button;
 
-    width: 30px;
+    font-size: 1.8rem;
+
+    width: 3rem;
     aspect-ratio: 1;
     border-radius: var(--border-radius-small);
     cursor: pointer;

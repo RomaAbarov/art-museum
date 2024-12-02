@@ -1,13 +1,13 @@
 .gallery {
   &__list {
-    gap: 60px;
+    gap: 6rem;
 
     @include media.desktop {
-      gap: 40px;
+      gap: 4rem;
     }
 
     &:not(:last-child) {
-      margin-bottom: 20px;
+      margin-bottom: 2rem;
     }
   }
 }

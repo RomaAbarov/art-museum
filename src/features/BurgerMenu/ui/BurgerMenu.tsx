@@ -1,18 +1,37 @@
+import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { BurgerMenu } from "@/features/BurgerMenu";
-import "./Navigation.scss";
+import "./BurgerMenu.scss";
 
-export function Navigation() {
+export function BurgerMenu() {
+  const [isShowBurger, setIsShowBurger] = useState(false);
+
+  function onClick() {
+    setIsShowBurger(!isShowBurger);
+  }
+
   return (
-    <>
-      <nav className="header__menu hidden-mobile">
-        <ul className="header__menu-list">
-          <li className="header__menu-item">
+    <div className="burger-menu visible-mobile">
+      <button
+        className={
+          isShowBurger
+            ? "burger-button active visible-mobile"
+            : "burger-button visible-mobile"
+        }
+        type="button"
+        onClick={onClick}
+      >
+        <span className="visually-hidden">Open menu</span>
+        <span className="burger-button__line"></span>
+      </button>
+      <nav className="burger-menu__body">
+        <ul className="burger-menu__list">
+          <li className="burger-menu__item">
             <NavLink
               to="/"
               className={({ isActive }) =>
-                isActive ? "header__menu-link is-hidden" : "header__menu-link"
+                isActive ? "burger-menu__link is-hidden" : "burger-menu__link"
               }
+              onClick={onClick}
             >
               <svg
                 width="24"
@@ -39,12 +58,13 @@ export function Navigation() {
               <span>Home</span>
             </NavLink>
           </li>
-          <li className="header__menu-item">
+          <li className="burger-menu__item">
             <NavLink
               to="/favorites"
               className={({ isActive }) =>
-                isActive ? "header__menu-link is-active" : "header__menu-link"
+                isActive ? "burger-menu__link is-active" : "burger-menu__link"
               }
+              onClick={onClick}
             >
               <svg
                 width="17"
@@ -66,8 +86,6 @@ export function Navigation() {
           </li>
         </ul>
       </nav>
-
-      <BurgerMenu />
-    </>
+    </div>
   );
 }

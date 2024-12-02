@@ -1,6 +1,6 @@
 .title {
   &__header {
-    font-size: 64px;
+    @include mixins.fluid-text(64, 50);
     text-transform: capitalize;
     font-weight: 700;
     text-align: center;
@@ -11,6 +11,11 @@
 
     & > p:last-child {
       color: var(--color-orange);
+
+      & svg {
+        width: 3.8rem;
+        height: 4.9rem;
+      }
     }
   }
 }

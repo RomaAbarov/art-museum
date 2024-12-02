@@ -1,15 +1,17 @@
 .header {
   &__menu {
+    @include mixins.fluid-text(18, 16);
+
     &-list {
       display: flex;
       align-items: center;
-      column-gap: 16px;
+      column-gap: 1.6rem;
     }
 
     &-link {
       display: flex;
       align-items: center;
-      column-gap: 4px;
+      column-gap: 0.4rem;
 
       color: var(--color-light);
 

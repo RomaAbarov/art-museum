@@ -1,14 +1,16 @@
 .search {
-  --widthButtonSearch: 64px;
+  --widthButtonSearch: 6.4rem;
 
   &__field {
     position: relative;
+
+    font-size: 1.6rem;
   }
 
   &__input {
     width: 100%;
     height: var(--input-height);
-    padding-inline: 16px var(--widthButtonSearch);
+    padding-inline: 1.6rem var(--widthButtonSearch);
     border: none;
     border-radius: var(--border-radius);
     background: rgba(57, 57, 57, 0.05);
@@ -33,14 +35,19 @@
     @include media.hover {
       background-color: var(--color-accent);
     }
+
+    & > svg {
+      width: 3.2rem;
+      height: 3.2rem;
+    }
   }
 
   &__error {
     position: absolute;
     left: 0;
-    padding-left: 16px;
+    padding-left: 1.6rem;
 
-    font-size: 14px;
+    font-size: 1.4rem;
     color: red;
   }
 }
