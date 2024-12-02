@@ -11,7 +11,6 @@ export function Layout() {
       <Suspense fallback={<Fallback />}>
         <Outlet />
       </Suspense>
-
       <Footer />
     </>
   );

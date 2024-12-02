@@ -21,6 +21,8 @@ export function InputSearch({ placeholder, register, error }: Props) {
         id="search"
         className="search__input"
         placeholder={placeholder}
+        aria-errormessage="search-error"
+        aria-invalid={error ? "true" : "false"}
       />
       <button type="submit" className="search__button">
         <svg
@@ -46,7 +48,9 @@ export function InputSearch({ placeholder, register, error }: Props) {
           />
         </svg>
       </button>
-      <p className="search__error">{error}</p>
+      <p className="search__error" id="search-error">
+        {error}
+      </p>
     </div>
   );
 }
