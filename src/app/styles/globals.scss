@@ -8,6 +8,10 @@ body {
   line-height: 1.5; /*для chrome по умолчанию*/
   color: var(--color-dark);
   background-color: var(--color-light);
+
+  &:has(.burger-button.active) {
+    overflow: hidden;
+  }
 }
 
 a,
